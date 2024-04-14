@@ -6,6 +6,18 @@
       "schemaMap": {
         "cookhubMain": {
           "realization": "dao/CookhubMainMongo"
+        },
+        "recipe": {
+          "realization": "dao/RecipeMongo"
+        },
+        "dailyPlan": {
+          "realization": "dao/DailyPlanMongo"
+        },
+        "ingredient": {
+          "realization": "dao/IngredientMongo"
+        },
+        "shoppingList": {
+          "realization": "dao/ShoppingListMongo"
         }
       }
     }

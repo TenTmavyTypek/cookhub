@@ -25,6 +25,96 @@
         "realization": "index.html",
         "httpMethod": "GET",
         "type": "UVE"
+      },
+      "recipe/create": {
+        "realization": "api/controllers/RecipeController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "recipe/delete": {
+        "realization": "api/controllers/RecipeController.delete",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "recipe/update": {
+        "realization": "api/controllers/RecipeController.update",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "recipe/list": {
+        "realization": "api/controllers/RecipeController.list",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "recipe/get": {
+        "realization": "api/controllers/RecipeController.get",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "dailyPlan/create": {
+        "realization": "api/controllers/DailyPlanController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "dailyPlan/delete": {
+        "realization": "api/controllers/DailyPlanController.delete",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "dailyPlan/update": {
+        "realization": "api/controllers/DailyPlanController.update",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "dailyPlan/listByWeek": {
+        "realization": "api/controllers/DailyPlanController.listByWeek",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "dailyPlan/get": {
+        "realization": "api/controllers/DailyPlanController.get",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "ingredient/create": {
+        "realization": "api/controllers/IngredientController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "ingredient/update": {
+        "realization": "api/controllers/IngredientController.update",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "ingredient/delete": {
+        "realization": "api/controllers/IngredientController.delete",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "ingredient/list": {
+        "realization": "api/controllers/IngredientController.list",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "ingredient/get": {
+        "realization": "api/controllers/IngredientController.get",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "shoppingList/create": {
+        "realization": "api/controllers/ShoppingListController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "shoppingList/update": {
+        "realization": "api/controllers/ShoppingListController.update",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "shoppingList/get": {
+        "realization": "api/controllers/ShoppingListController.get",
+        "httpMethod": "GET",
+        "type": "CMD"
       }
     }
   }

@@ -1,30 +1,101 @@
 {
   "{asid}": {
-    "profileList": ["AsidAuthorities", "AsidExecutives", "AsidLicenseOwner", "Public"],
-    "useCaseMap": {
-    }
+    "profileList": ["AsidAuthorities","AsidExecutives","AsidLicenseOwner","Public"],
+    "useCaseMap": {}
   },
   "*": {
-    "profileList": ["Authorities", "Executives", "AwidLicenseOwner", "Public", "Authenticated", "AwidInitiator"],
+    "profileList": ["Authorities","Executives","AwidLicenseOwner","Public","Authenticated","AwidInitiator"],
     "useCaseMap": {
       "sys/uuAppWorkspace/init": {
-        "sysStateList": ["created", "assigned"],
-        "profileList": ["AwidLicenseOwner", "AwidInitiator"]
+        "sysStateList": ["created","assigned"],
+        "profileList": ["AwidLicenseOwner","AwidInitiator"]
       },
       "sys/uuAppWorkspace/load": {
-        "sysStateList": ["created", "assigned", "active", "restricted", "readOnly", "closed", "suspended"],
+        "sysStateList": ["created","assigned","active","restricted","readOnly","closed","suspended"],
         "profileList": ["Authenticated"]
       },
       "sys/uuAppWorkspace/loadBasicData": {
-        "sysStateList": ["created", "assigned", "active", "restricted", "readOnly", "closed", "suspended"],
+        "sysStateList": ["created","assigned","active","restricted","readOnly","closed","suspended"],
         "profileList": ["Public"]
       },
       "defaultUve": {
         "profileList": ["Public"]
       },
       "sys/uuAppWorkspace/initUve": {
-        "sysStateList": ["created", "assigned"],
-        "profileList": ["Public", "AwidLicenseOwner", "AwidInitiator"]
+        "sysStateList": ["created","assigned"],
+        "profileList": ["Public","AwidLicenseOwner","AwidInitiator"]
+      },
+      "recipe/create": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "recipe/delete": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "recipe/update": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "recipe/list": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "recipe/get": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "dailyPlan/create": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "dailyPlan/delete": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "dailyPlan/update": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "dailyPlan/listByWeek": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "dailyPlan/get": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "ingredient/create": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "ingredient/update": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "ingredient/delete": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "ingredient/list": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "ingredient/get": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "shoppingList/create": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
+      },
+      "shoppingList/update": {
+        "sysStateList": ["active"],
+        "profileList": []
+      },
+      "shoppingList/get": {
+        "sysStateList": ["active"],
+        "profileList": ["Public"]
       }
     }
   }
