@@ -190,14 +190,10 @@ class RecipeAbl {
       throw new Errors.Get.RecipeDoesNotExist({ uuAppErrorMap }, { recipeId: dtoIn.id });
     }
 
-    console.log("recipeId", recipe.id);
-
     let dailyPlans = await this.dailyPlanDao.listByRecipeId(awid, String(recipe.id));
-    console.log("dailyPlans", dailyPlans);
 
     for (let dailyPlan of dailyPlans.itemList) {
       let idList = dailyPlan.recipeIdList;
-      console.log("idList", idList);
       const filteredIdList = idList.filter((item) => item !== String(recipe.id));
 
       const dtoUpdated = {

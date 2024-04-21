@@ -4,7 +4,6 @@ const { Validator } = require("uu_appg01_server").Validation;
 const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
 const Errors = require("../api/errors/shopping-list-error.js");
-
 const WARNINGS = require("../api/warnings/shopping-list-warning.js");
 
 class ShoppingListAbl {
@@ -16,6 +15,7 @@ class ShoppingListAbl {
   }
 
   async create(awid, dtoIn, uuAppErrorMap = {}) {
+    console.log("start");
     let shoppingListDtoOut;
     let validationResult = this.validator.validate("shoppingListCreateDtoInType", dtoIn);
 
@@ -33,7 +33,10 @@ class ShoppingListAbl {
       return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
     }
 
+    console.log("weeknumber", getWeekNumber());
+
     let dailyPlans = await this.dailyPlanDao.listByWeek(awid, dtoIn.userId, getWeekNumber());
+    console.log("dailyPlans", dailyPlans);
 
     function getAllRecipeIds() {
       let allRecipeIds = [];
@@ -44,18 +47,21 @@ class ShoppingListAbl {
     }
 
     const allRecipeIds = getAllRecipeIds();
+    console.log("allRecipeIds", allRecipeIds);
 
-    let recipes = await this.recipeDao.listByIds(awid, allRecipeIds);
+    const recipeIdList = [...new Set(allRecipeIds)];
+    console.log("recipeIdList", recipeIdList);
 
-    function getAllIngredients() {
-      let allIngredients = [];
-      for (let item of recipes.itemList) {
-        allIngredients = allIngredients.concat(item.ingredientList);
-      }
-      return allIngredients;
+    let allIngredients = [];
+    for (let recipeId of recipeIdList) {
+      console.log("recipeId", recipeId);
+      let recipe = await this.recipeDao.get(awid, recipeId);
+      console.log("recipe", recipe);
+      allIngredients = allIngredients.concat(recipe.ingredientList);
     }
+    console.log("allIngredients", allIngredients);
 
-    const allIngredients = getAllIngredients();
+    debugger;
 
     dtoIn = {
       ...dtoIn,
@@ -75,8 +81,6 @@ class ShoppingListAbl {
   }
 
   async update(awid, dtoIn) {}
-
-  async create(awid, dtoIn) {}
 }
 
 module.exports = new ShoppingListAbl();
