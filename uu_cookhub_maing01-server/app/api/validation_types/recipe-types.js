@@ -1,43 +1,50 @@
 /* eslint-disable */
 
 const recipeCreateDtoInType = shape({
-  userId: string(255).isRequired(),
+  userId: string().isRequired(),
   name: string(100).isRequired(),
-  image: binary(),
+  image: string(255),
   method: string(),
   ingredientList: array(
     shape({
-      ingredientId: id().isRequired(),
+      id: id().isRequired(),
       quantity: number(),
-      unit: oneOf(["g", "kg", "tsp", "tbsp", "l", "ml"]),
+      unit: oneOf(["g", "kg", "l", "ml", "pcs"]),
     }),
   ),
 });
 
-const recipeDeleteDtoIn = shape({
-  userId: id().isRequired(),
+const recipeDeleteDtoInType = shape({
   id: id().isRequired(),
 });
 
 const recipeUpdateDtoInType = shape({
+  userId: string(),
   id: id().isRequired(),
   name: string(100),
-  image: binary(),
+  image: string(255),
   method: string(),
   ingredientList: array(
     shape({
-      ingredientId: id().isRequired(),
+      id: id().isRequired(),
       quantity: number(),
-      unit: oneOf(["g", "kg", "tsp", "tbsp", "l", "ml"]),
+      unit: oneOf(["g", "kg", "l", "ml", "pcs"]),
     }),
   ),
+  nutritionalValues: shape({
+    calories: number().isRequired(),
+    proteins: number(),
+    carbs: number(),
+    sugars: number(),
+    fats: number(),
+  }),
 });
 
-const recipeGetDtoIn = shape({
+const recipeGetDtoInType = shape({
   id: id().isRequired(),
 });
 
-const recipeListDtoIn = shape({
+const recipeListDtoInType = shape({
   userId: string(255).isRequired(),
   dailyPlanId: id(),
 });

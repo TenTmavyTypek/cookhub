@@ -12,9 +12,9 @@ const shoppingListUpdateDtoInType = shape({
   userId: string(255).isRequired(),
   ingredientList: array(
     shape({
-      ingredientId: id().isRequired(),
+      id: id().isRequired(),
       quantity: number(),
-      unit: oneOf(["g", "kg", "tsp", "tbsp", "l", "ml"]),
+      unit: oneOf(["g", "kg", "l", "ml", "pcs"]),
     }),
   ),
 });
