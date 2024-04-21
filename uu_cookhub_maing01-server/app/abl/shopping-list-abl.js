@@ -33,8 +33,6 @@ class ShoppingListAbl {
       return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
     }
 
-    console.log("weekNum", getWeekNumber());
-
     let dailyPlans = await this.dailyPlanDao.listByWeek(awid, dtoIn.userId, getWeekNumber());
 
     function getAllRecipeIds() {
