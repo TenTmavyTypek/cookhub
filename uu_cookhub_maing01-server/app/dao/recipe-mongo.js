@@ -14,14 +14,6 @@ class RecipeMongo extends UuObjectDao {
     return await super.find(filter);
   }
 
-  async listByIds(awid, idList) {
-    const filter = {
-      awid: awid,
-      id: { $in: idList },
-    };
-    return await super.find(filter);
-  }
-
   async listByIngredientId(awid, id) {
     const filter = {
       awid: awid,
