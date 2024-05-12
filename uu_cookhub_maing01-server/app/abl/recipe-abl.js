@@ -98,17 +98,17 @@ class RecipeAbl {
         }
 
         if (ingredient.nutritionalValues) {
-          nutritionalValues.calories += ingredient.nutritionalValues.calories;
-          nutritionalValues.proteins += ingredient.nutritionalValues.proteins;
-          nutritionalValues.carbs += ingredient.nutritionalValues.carbs;
-          nutritionalValues.sugars += ingredient.nutritionalValues.sugars;
-          nutritionalValues.fats += ingredient.nutritionalValues.fats;
+          recipe.nutritionalValues.calories += ingredient.nutritionalValues.calories;
+          recipe.nutritionalValues.proteins += ingredient.nutritionalValues.proteins;
+          recipe.nutritionalValues.carbs += ingredient.nutritionalValues.carbs;
+          recipe.nutritionalValues.sugars += ingredient.nutritionalValues.sugars;
+          recipe.nutritionalValues.fats += ingredient.nutritionalValues.fats;
         }
       }
 
       dtoIn = {
         ...dtoIn,
-        nutritionalValues: nutritionalValues,
+        nutritionalValues: recipe.nutritionalValues,
       };
     }
 

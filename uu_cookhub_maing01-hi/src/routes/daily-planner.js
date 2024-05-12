@@ -18,9 +18,9 @@ import { Image } from "uu5imagingg01";
 //@@viewOn:helpers
 //@@viewOff:helpers
 
-let Home = createVisualComponent({
+let RecipeBook = createVisualComponent({
   //@@viewOn:statics
-  uu5Tag: Config.TAG + "Home",
+  uu5Tag: Config.TAG + "RecipeBook",
   //@@viewOff:statics
 
   //@@viewOn:propTypes
@@ -69,35 +69,14 @@ let Home = createVisualComponent({
     //@@viewOff:interface
 
     //@@viewOn:render
-    return (
-      <div style={{ paddingTop: "5vh", paddingBottom: "5vh" }}>
-        <Uu5Elements.GridTemplate
-          contentMap={{
-            header: <Header />,
-            recipeBook: <CustomTile route="recipeBook" headerText="Recipe Book" img={images.recipeBook} />,
-            dailyPlanner: <CustomTile route="dailyPlanner" headerText="Daily Planner" img={images.dailyPlanner} />,
-            shoppingList: <CustomTile route="shoppingList" headerText="Shopping List" img={images.shoppingList} />,
-          }}
-          templateAreas={{
-            xs: `header, recipeBook, dailyPlanner, shoppingList`,
-            m: `
-          header header header,
-          recipeBook dailyPlanner shoppingList
-        `,
-          }}
-          templateColumns={{ xs: "100%", m: "repeat(3, 1fr)" }}
-          rowGap={8}
-          columnGap={8}
-        />
-      </div>
-    );
+    return <div style={{ paddingTop: "5vh", paddingBottom: "5vh" }}></div>;
     //@@viewOff:render
   },
 });
 
-Home = withRoute(Home, { authenticated: true });
+RecipeBook = withRoute(RecipeBook, { authenticated: true });
 
 //@@viewOn:exports
-export { Home };
-export default Home;
+export { RecipeBook };
+export default RecipeBook;
 //@@viewOff:exports

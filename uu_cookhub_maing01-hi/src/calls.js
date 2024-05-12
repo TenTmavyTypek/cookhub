@@ -19,6 +19,114 @@ const Calls = {
   //   return Calls.call("get", commandUri, dtoIn);
   // },
 
+  // recipe/create
+  createRecipe(dtoInData) {
+    const commandUri = Calls.getCommandUri("recipe/create");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // recipe/delete
+  deleteRecipe(dtoInData) {
+    const commandUri = Calls.getCommandUri("recipe/delete");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // recipe/update
+  updateRecipe(dtoInData) {
+    const commandUri = Calls.getCommandUri("recipe/update");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // recipe/list
+  listRecipes(dtoInData) {
+    const commandUri = Calls.getCommandUri("recipe/list");
+    return Calls.call("get", commandUri, dtoInData);
+  },
+
+  // recipe/get
+  getRecipe(dtoInData) {
+    const commandUri = Calls.getCommandUri("recipe/get");
+    return Calls.call("get", commandUri, dtoInData);
+  },
+
+  // dailyPlan/create
+  createDailyPlan(dtoInData) {
+    const commandUri = Calls.getCommandUri("dailyPlan/create");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // dailyPlan/delete
+  deleteDailyPlan(dtoInData) {
+    const commandUri = Calls.getCommandUri("dailyPlan/delete");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // dailyPlan/update
+  updateDailyPlan(dtoInData) {
+    const commandUri = Calls.getCommandUri("dailyPlan/update");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // dailyPlan/listByWeek
+  listDailyPlansByWeek(dtoInData) {
+    const commandUri = Calls.getCommandUri("dailyPlan/listByWeek");
+    return Calls.call("get", commandUri, dtoInData);
+  },
+
+  // dailyPlan/get
+  getDailyPlan(dtoInData) {
+    const commandUri = Calls.getCommandUri("dailyPlan/get");
+    return Calls.call("get", commandUri, dtoInData);
+  },
+
+  // ingredient/create
+  createIngredient(dtoInData) {
+    const commandUri = Calls.getCommandUri("ingredient/create");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // ingredient/update
+  updateIngredient(dtoInData) {
+    const commandUri = Calls.getCommandUri("ingredient/update");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // ingredient/delete
+  deleteIngredient(dtoInData) {
+    const commandUri = Calls.getCommandUri("ingredient/delete");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // ingredient/list
+  listIngredients(dtoInData) {
+    const commandUri = Calls.getCommandUri("ingredient/list");
+    return Calls.call("get", commandUri, dtoInData);
+  },
+
+  // ingredient/get
+  getIngredient(dtoInData) {
+    const commandUri = Calls.getCommandUri("ingredient/get");
+    return Calls.call("get", commandUri, dtoInData);
+  },
+
+  // shoppingList/create
+  createShoppingList(dtoInData) {
+    const commandUri = Calls.getCommandUri("shoppingList/create");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // shoppingList/update
+  updateShoppingList(dtoInData) {
+    const commandUri = Calls.getCommandUri("shoppingList/update");
+    return Calls.call("post", commandUri, dtoInData);
+  },
+
+  // shoppingList/get
+  getShoppingList(dtoInData) {
+    const commandUri = Calls.getCommandUri("shoppingList/get");
+    return Calls.call("get", commandUri, dtoInData);
+  },
+
   loadIdentityProfiles() {
     const commandUri = Calls.getCommandUri("sys/uuAppWorkspace/initUve");
     return Calls.call("get", commandUri);

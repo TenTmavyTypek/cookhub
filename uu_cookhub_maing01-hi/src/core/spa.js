@@ -6,6 +6,10 @@ import Plus4U5App from "uu_plus4u5g02-app";
 
 import Config from "./config/config.js";
 import Home from "../routes/home.js";
+import RecipeBook from "../routes/recipe-book.js";
+import DailyPlanner from "../routes/daily-planner.js";
+import ShoppingList from "../routes/shopping-list.js";
+import Recipe from "../routes/recipe.js";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -17,6 +21,10 @@ const ROUTE_MAP = {
   "": { redirect: "home" },
   home: (props) => <Home {...props} />,
   about: (props) => <About {...props} />,
+  recipeBook: (props) => <RecipeBook {...props} />,
+  dailyPlanner: (props) => <DailyPlanner {...props} />,
+  shoppingList: (props) => <ShoppingList {...props} />,
+  recipe: (props) => <Recipe {...props} />,
   "sys/uuAppWorkspace/initUve": (props) => <InitAppWorkspace {...props} />,
   controlPanel: (props) => <ControlPanel {...props} />,
   "*": () => (
