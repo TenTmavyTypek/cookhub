@@ -1,7 +1,7 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useSession, useState, useScreenSize, useEffect, useCall } from "uu5g05";
+import { createVisualComponent, Utils, useSession, useState, useScreenSize, useEffect, useCall } from "uu5g05";
 import Config from "./config/config.js";
-import { Box, GridTemplate, Grid, ScrollableBox, Tile, Line, Button, Text, RichIcon, Modal } from "uu5g05-elements";
+import { Box, GridTemplate, Grid, ScrollableBox, Tile, Button, Text, Modal } from "uu5g05-elements";
 import { Image } from "uu5imagingg01";
 import Uu5TilesElements from "uu5tilesg02-elements";
 import Calls from "../../calls.js";
@@ -36,7 +36,7 @@ const RecipeView = createVisualComponent({
 
   render(props) {
     //@@viewOn:private
-    const { children, data, handlerMap } = props;
+    const { data, handlerMap } = props;
     const [screenSize, setScreenSize] = useScreenSize();
     const [ingredientList, setIngredientList] = useState();
     const [isModalOpen, setIsModalOpen] = useState();
@@ -44,31 +44,35 @@ const RecipeView = createVisualComponent({
     const [imgSize, setImgSize] = useState();
     const { identity } = useSession();
     const ingredientListCall = useCall(Calls.listIngredients);
+    const ingredientCreateCall = useCall(Calls.createIngredient);
+    const deleteIngredientCall = useCall(Calls.deleteIngredient);
     const unitList = [{ value: "g" }, { value: "kg" }, { value: "l" }, { value: "ml" }, { value: "pcs" }];
+    const [ingredients, setIngredients] = useState();
     const { value: formValue, setItemValue, submit } = useFormApi();
 
     useEffect(() => {
       ingredientListCall.call({ userId: identity.uuIdentity }).then((res) => setIngredientList(res.itemList));
     }, []);
 
-    console.log("identity.uuIdentity", identity.uuIdentity);
-    console.log("ingredientList", ingredientList);
-    console.log("dataReceiptData", data);
+    useEffect(() => {
+      let data = getIngredients();
+      setIngredients(data);
+    }, [data.ingredientList]);
 
     useEffect(() => {
       let size, width;
       switch (screenSize) {
         case "xs":
           size = "s";
-          width = "20rem";
+          width = "15rem";
           break;
         case "s":
           size = "m";
-          width = "25rem";
+          width = "20rem";
           break;
         default:
           size = "l";
-          width = "50rem";
+          width = "40rem";
           break;
       }
       setImgSize(size);
@@ -101,28 +105,53 @@ const RecipeView = createVisualComponent({
         let tableData = [];
         for (let recipeIngredient of data.ingredientList) {
           let foundObject = findObjectById(recipeIngredient.id, ingredientList);
-          tableData.push({
-            Ingredient: foundObject.name,
-            Amount: recipeIngredient.quantity + recipeIngredient.unit,
-          });
+          if (foundObject && foundObject.name) {
+            tableData.push({
+              Ingredient: foundObject.name,
+              Amount: recipeIngredient.quantity + recipeIngredient.unit,
+            });
+          }
         }
         return tableData;
       }
     }
 
-    function IngredientsSection() {
+    function getActionList({ rowIndex, data }) {
+      return [
+        {
+          icon: "mdi-close",
+          tooltip: "Delete ingredient",
+          onClick: () => handleDeleteIngredientFromRecipe(data),
+          collapsed: false,
+        },
+      ];
+    }
+
+    async function handleDeleteIngredientFromRecipe(e) {
+      let selectedIngredient = ingredientList.find((ingredient) => ingredient.name === e.Ingredient);
+      await deleteIngredientCall.call({ id: selectedIngredient.id });
+      data.ingredientList = data.ingredientList.filter((ingredient) => ingredient.id !== selectedIngredient.id);
+    }
+
+    function IngredientsSection(props) {
+      const { modalView } = props;
       return (
         <Grid style={{ padding: "2rem" }} justifyItems="center">
-          <Text category="expose" segment="default" type="lead" autoFit={true}>
-            Ingredients
-          </Text>
-          <Grid.Item>
-            <Tile width={tileWidth}>
-              <ScrollableBox maxHeight="50%">
-                <Uu5TilesElements.Table data={getIngredients()}></Uu5TilesElements.Table>
-              </ScrollableBox>
-            </Tile>
-          </Grid.Item>
+          <Box style={{ padding: "1rem", borderRadius: "1rem", textAlign: "center" }} justifyItems="center">
+            <Text category="expose" segment="default" style={{ paddingBottom: "1rem" }} type="lead" autoFit={true}>
+              Ingredients
+            </Text>
+            <Grid.Item>
+              <Tile width={modalView ? "100%" : tileWidth}>
+                <ScrollableBox maxHeight="50%">
+                  <Uu5TilesElements.Table
+                    data={ingredients || getIngredients()}
+                    getActionList={isModalOpen && getActionList}
+                  ></Uu5TilesElements.Table>
+                </ScrollableBox>
+              </Tile>
+            </Grid.Item>
+          </Box>
         </Grid>
       );
     }
@@ -130,22 +159,31 @@ const RecipeView = createVisualComponent({
     function MethodSection() {
       return (
         <Grid style={{ padding: "2rem" }} justifyItems="center">
-          <Text category="expose" segment="default" type="lead" autoFit={true}>
-            Method
-          </Text>
-          <Grid.Item>
-            <Tile width={tileWidth}>
-              <ScrollableBox maxHeight="20rem">{data.method}</ScrollableBox>
-            </Tile>
-          </Grid.Item>
+          <Box style={{ padding: "1rem", borderRadius: "1rem", textAlign: "center" }} justifyItems="center">
+            <Text category="expose" style={{ paddingBottom: "1rem" }} segment="default" type="lead" autoFit={true}>
+              Method
+            </Text>
+            <Grid.Item>
+              <Tile width={tileWidth}>
+                <ScrollableBox maxHeight="20rem">{data.method}</ScrollableBox>
+              </Tile>
+            </Grid.Item>
+          </Box>
         </Grid>
       );
     }
 
     function EditButton() {
       return (
-        <Grid style={{ padding: "2rem" }} justifyItems="center">
-          <Button icon="uugds-edit-inline" onClick={() => setIsModalOpen(true)}>
+        <Grid justifyItems="end">
+          <Button
+            colorScheme="warning"
+            significance="highlighted"
+            size="xl"
+            style={{ margin: "0.5rem" }}
+            icon="uugds-edit-inline"
+            onClick={() => setIsModalOpen(true)}
+          >
             Edit
           </Button>
         </Grid>
@@ -157,10 +195,7 @@ const RecipeView = createVisualComponent({
     }
 
     async function handleAddIngredient(formData) {
-      console.log("Ingredients list", ingredientList);
-      console.log("dataINg", formData.value);
       let ingredient = ingredientList.find((obj) => obj.name === formData.value.ingredient);
-      console.log(ingredient);
       if (ingredient) {
         let isIngredientInRecipe = data.ingredientList.find((obj) => obj.id === ingredient.id);
         if (isIngredientInRecipe && isIngredientInRecipe.unit === formData.value.unit) {
@@ -175,7 +210,6 @@ const RecipeView = createVisualComponent({
           let newIngredientList = [...data.ingredientList];
           newIngredientList.push({ id: ingredient.id, quantity: formData.value.amount, unit: formData.value.unit });
 
-          console.log("newIngredientList", newIngredientList);
           const dtoIn = {
             id: data.id,
             ingredientList: newIngredientList,
@@ -183,8 +217,30 @@ const RecipeView = createVisualComponent({
           await handlerMap.updateRecipe(dtoIn);
         }
       } else {
-        console.log("NoINgr");
+        const ingredientDtoIn = {
+          userId: identity.uuIdentity,
+          name: formData.value.ingredient,
+        };
+        await ingredientCreateCall
+          .call(ingredientDtoIn)
+          .then((res) => handleAddIngredientToRecipe(res.id, formData.value.amount, formData.value.unit));
       }
+    }
+
+    async function handleAddIngredientToRecipe(ingredientId, amount, unit) {
+      let newIngredientList = [...data.ingredientList];
+      newIngredientList.push({
+        id: ingredientId,
+        quantity: amount,
+        unit: unit,
+      });
+
+      const dtoIn = {
+        id: data.id,
+        ingredientList: newIngredientList,
+      };
+
+      await handlerMap.updateRecipe(dtoIn);
     }
     //@@viewOff:private
 
@@ -207,14 +263,17 @@ const RecipeView = createVisualComponent({
                 button: <EditButton />,
               }}
               templateAreas={{
-                xs: `image, ingredients, method, button`,
-                m: `
+                xs: `button, image, ingredients, method`,
+                s: `button, image, ingredients, method`,
+                m: `button, image, ingredients, method`,
+                l: `button, image, ingredients, method`,
+                xl: `
               image image,
               ingredients method,
               button button
               `,
               }}
-              templateColumns={{ xs: "100%", m: "repeat(2, 1fr)" }}
+              templateColumns={{ xs: "100%", xl: "repeat(2, 1fr)" }}
               rowGap={8}
               columnGap={8}
             />
@@ -223,7 +282,7 @@ const RecipeView = createVisualComponent({
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
               <Form onSubmit={(e) => handleAddIngredient(e.data)}>
                 <Box borderRadius={"expressive"}>
-                  <IngredientsSection />
+                  <IngredientsSection modalView />
                   <Grid style={{ padding: "1rem" }} templateColumns={"5fr 2fr 3fr"}>
                     <FormText name="ingredient" label="Ingredient"></FormText>
                     <FormNumber name="amount" label="Amount"></FormNumber>
